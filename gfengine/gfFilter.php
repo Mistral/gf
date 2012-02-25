@@ -9,7 +9,7 @@ if (!defined('gf_SYSTEM_PATH')) {
  * @subpackage gfFW.gfengine.gfFilter
  * 
  */
-define('gf_FILTER_PATH', gf_APPS_PATH . '/filters');
+define('gf_FILTER_PATH', gf_APP_PATH . '/filters');
 define('gf_FILTER_PRE', 'pre');
 define('gf_FILTER_POST', 'post');
 define('gf_FILTER_EXTENSION', '.filter');
@@ -68,7 +68,7 @@ class gfFilter {
     }
 
     private function _loadConfigOfActionFilters() {
-        require(gf_APPS_PATH . '/modules/' . gf::Router()->getController() . '/configs.php');
+        require(gf_APPS_PATH . '/modules/' . gf::router()->getController() . '/configs.php');
         $this->_aConfigs['in_action'] = @$aArrayOfFiltersInSelectAction;
         $this->_aConfigs['all_action'] = @$aFiltersInAllAction;
         $this->_aConfigs['block_in_action'] = @$aBlockAutoArrayOfFilterInSelectAction;
@@ -88,9 +88,9 @@ class gfFilter {
                 }
             }
         }
-        if (isset($this->_aConfigs['block_in_action'][gf::Router()->getAction()]['pre'])) {
-            if (count($this->_aConfigs['block_in_action'][gf::Router()->getAction()]['pre']) > 0 && count($this->_aFilters['pre']) > 0) {
-                foreach ($this->_aConfigs['block_in_action'][gf::Router()->getAction()]['pre'] as $v3) {
+        if (isset($this->_aConfigs['block_in_action'][gf::router()->getAction()]['pre'])) {
+            if (count($this->_aConfigs['block_in_action'][gf::router()->getAction()]['pre']) > 0 && count($this->_aFilters['pre']) > 0) {
+                foreach ($this->_aConfigs['block_in_action'][gf::router()->getAction()]['pre'] as $v3) {
                     foreach ($this->_aFilters['pre'] as $k1 => $v4) {
                         if (@$v3['filter'] == @$v4['filter']) {
                             unset($this->_oFilters['pre'][$k1]);
@@ -108,9 +108,9 @@ class gfFilter {
             }
         }
 
-        if (isset($this->_aConfigs['in_action'][gf::Router()->getAction()]['pre'])) {
-            if (count($this->_aConfigs['in_action'][gf::Router()->getAction()]['pre']) > 0) {
-                foreach ($this->_aConfigs['in_action'][gf::Router()->getAction()]['pre'] as $v6) {
+        if (isset($this->_aConfigs['in_action'][gf::router()->getAction()]['pre'])) {
+            if (count($this->_aConfigs['in_action'][gf::router()->getAction()]['pre']) > 0) {
+                foreach ($this->_aConfigs['in_action'][gf::router()->getAction()]['pre'] as $v6) {
                     $this->_addFilterPre(@$v6['filter']);
                 }
             }
@@ -130,9 +130,9 @@ class gfFilter {
                 }
             }
         }
-        if (isset($this->_aConfigs['block_in_action'][gf::Router()->getAction()]['post'])) {
-            if (count($this->_aConfigs['block_in_action'][gf::Router()->getAction()]['post']) > 0 && count($this->_aFilters['post']) > 0) {
-                foreach ($this->_aConfigs['block_in_action'][gf::Router()->getAction()]['post'] as $v3) {
+        if (isset($this->_aConfigs['block_in_action'][gf::router()->getAction()]['post'])) {
+            if (count($this->_aConfigs['block_in_action'][gf::router()->getAction()]['post']) > 0 && count($this->_aFilters['post']) > 0) {
+                foreach ($this->_aConfigs['block_in_action'][gf::router()->getAction()]['post'] as $v3) {
                     foreach ($this->_aFilters['post'] as $k1 => $v4) {
                         if (@$v3['filter'] == @$v4['filter']) {
                             unset($this->_oFilters['post'][$k1]);
@@ -149,9 +149,9 @@ class gfFilter {
                 }
             }
         }
-        if (isset($this->_aConfigs['in_action'][gf::Router()->getAction()]['post'])) {
-            if (count($this->_aConfigs['in_action'][gf::Router()->getAction()]['post']) > 0) {
-                foreach ($this->_aConfigs['in_action'][gf::Router()->getAction()]['post'] as $v6) {
+        if (isset($this->_aConfigs['in_action'][gf::router()->getAction()]['post'])) {
+            if (count($this->_aConfigs['in_action'][gf::router()->getAction()]['post']) > 0) {
+                foreach ($this->_aConfigs['in_action'][gf::router()->getAction()]['post'] as $v6) {
                     $this->_addFilterPost($v6['filter']);
                 }
             }
