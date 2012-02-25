@@ -1,0 +1,13 @@
+html { background: #83c018 url(kohana.png) 50% 0 no-repeat; }
+	body { width: 52em; margin: 200px auto 2em; font-size: 76%; font-family: Arial, sans-serif; color: #273907; line-height: 1.5; text-align: center; }
+	h1 { font-size: 3em; font-weight: normal; text-transform: uppercase; color: #fff; }
+	a { color: inherit; }
+	code { font-size: 1.3em; }
+	ul { list-style: none; padding: 2em 0; }
+	ul li { display: inline; padding-right: 1em; text-transform: uppercase; }
+	ul li a { padding: 0.5em 1em; background: #69ad0f; border: 1px solid #569f09; color: #fff; text-decoration: none; }
+	ul li a:hover { background: #569f09; }
+	.box { padding: 2em; background: #98cc2b; border: 1px solid #569f09; }
+	.copyright { font-size: 0.9em; text-transform: uppercase; color: #557d10; }
+	table tr th { background: #69ad0f; }
+	table tr td { background: #83c018; }

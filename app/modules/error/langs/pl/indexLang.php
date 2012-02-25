@@ -1,0 +1,3 @@
+<?php
+$aLang['index'] = 'sample';
+?>
