@@ -1,22 +1,22 @@
 <?php
 class gfEvent {
+    
+    private static $events;
 
-    private $events;
-
-    public function add($event, $params) {
-        $this->events[$event] = $params;
+    public static function add($event, $params) {
+        self::$events[$event] = $params;
     }
 
-    public function exist($event) {
-        if(isset($this->events[$event])) {
+    public static function exist($event) {
+        if(isset(self::$events[$event])) {
             return true;
         }
         return false;
     }
 
-    public function get($event) {
-        if(isset($this->events[$event])) {
-            return $this->events[$event];
+    public static function get($event) {
+        if(isset(self::$events[$event])) {
+            return self::$events[$event];
         }
         return false;
     }

@@ -16,13 +16,17 @@ define('gf_LOGS_PATH', gf_CORE_PATH.'/log/logs');
 define('gf_DOMAIN', str_replace('/index.php', '', $_SERVER['PHP_SELF']));
 define('gf_APP_PATH', gf_PATH.'/app');
 
-require_once(gf_CORE_PATH.'/log/gfLog.php');
-
-gfLog::loadAll();
-
+require_once(gf_CORE_PATH.'/gfEvent.php');
 require_once(gf_CORE_PATH.'/gfConfig.php');
 
 gfConfig::loadConfigs();
+
+if(gfConfig::getConfig('logs') == 1) {
+    if(!gfEvent::exist('logs_enabled')) {
+        require_once(gf_CORE_PATH.'/log/gfLog.php');
+        gfLog::loadAll();
+    }
+}
 
 if(gfConfig::getConfig('logs') == 1) {
     
@@ -41,20 +45,23 @@ if(gfConfig::getConfig('logs') == 1) {
     gfLog::add(new gfLog_Session(gfLog_Session::SESSION_STARTED, 'session_start()', gf_PATH, __FILE__, 8));
 }
 
-if(gfConfig::getConfig('functions_use_functions') == 1) {
+if(gfConfig::getConfig('use_functions') == 1) {
     require_once gf_APP_PATH.'/functions/functions.php';
     if(gfConfig::getConfig('logs') == 1) {
         gfLog::add(new gfLog_File(gfLog_File::FILE_REQUIRED, 'functions.php', gf_APP_PATH.'/functions', __FILE__, __LINE__));
     }
 }
 
-if(gfConfig::getConfig('functions_use_classes') == 1) {
+if(gfConfig::getConfig('use_classes') == 1) {
     require_once gf_APP_PATH.'/functions/classes.php';
     if(gfConfig::getConfig('logs') == 1) {
         gfLog::add(new gfLog_File(gfLog_File::FILE_REQUIRED, 'classes.php', gf_APP_PATH.'/functions', __FILE__, __LINE__));
     }
 }
+
 require_once(gf_CORE_PATH.'/gf.php');
+gfLog::add(new gfLog_File(gfLog_File::FILE_REQUIRED, 'gf.php', gf_CORE_PATH, __FILE__, __LINE__));
+
 gf::init();
 
 if(gfConfig::getConfig('setters_core') == 1) {

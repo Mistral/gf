@@ -12,7 +12,7 @@ class gfDispatcher {
             $this->setController($this->data['controller']);
             $this->setAction($this->data['action']);
         } else {
-            if(gfConfig::getConfig('show_errors' == 1)) {
+            if(gfConfig::getConfig('show_http_errors' == 1)) {
                 $this->setController('error');
                 $this->setAction('index');
             } else {
@@ -21,29 +21,38 @@ class gfDispatcher {
             }
         }
 
-        if($this->load()) {
-            
-            $this->o_controller->setup();
-            $this->o_controller->{$this->action}();
-        } else {
+        if(!$this->load($this->controller, $this->action)) {
+
             $this->setController('error');
             $this->setAction('index');
-            $this->load();
+
+            $this->load($this->controller, $this->action);
+            
         }
+
+        $this->o_controller->setup();
+        $this->o_controller->{$this->action}();
+
 
     }
     
-    public function load() {
-        require_once(gf_APP_PATH.'/controllers/'.$this->controller.'.php');
+    public function load($controller, $action) {
+
+        require_once(gf_CORE_PATH.'/gfAction.php');
+        require_once(gf_APP_PATH.'/controllers/'.$controller.'.php');
 
         if(gfConfig::getConfig('logs') == 1) {
-            gfLog::add(new gfLog_File(gfLog_File::FILE_REQUIRED, $this->controller.'.php', gf_APP_PATH.'/controllers/', __FILE__, __LINE__));
+            gfLog::add(new gfLog_File(gfLog_File::FILE_REQUIRED, $controller.'.php', gf_APP_PATH.'/controllers/', __FILE__, __LINE__));
+            gfLog::add(new gfLog_File(gfLog_File::FILE_REQUIRED, 'gfAction.php', gf_CORE_PATH.'/', __FILE__, __LINE__));
         }
-        $con = $this->controller.'Controller';
+
+        $con = $controller.'Controller';
+
         $this->o_controller = new $con();
-        if(method_exists($this->o_controller, $this->action)) {
+
+        if(method_exists($this->o_controller, $action)) {
             $vars = get_object_vars($this->o_controller);
-            if(in_array($this->action, $vars['actions'])) {
+            if(in_array($action, $vars['actions'])) {
                 return true;
             }
             return false;

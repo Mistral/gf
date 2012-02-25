@@ -3,7 +3,7 @@ if(!defined('gf_PATH')) {
     die('No script access');
 }
 /**
- * @version 2.0
+ * @version 1.0
  * @author Dawid Stec - Mistral
  * @subpackage gfFW.gfengine.gf
  * 
@@ -12,15 +12,9 @@ class gf {
 
     private static $instance = NULL;
 
-    private static $controller;
-
-    private static $db;
-
     public static $router;
 
     public static $request;
-
-    public static $event;
     
     private function __construct() {
 
@@ -29,7 +23,6 @@ class gf {
         require_once(gf_CORE_PATH.'/gfRouter.php');
         
         self::$request = new gfRequest($_POST, $_GET, $_FILES, $_SESSION, $_COOKIE, $_SERVER);
-        self::$event = new gfEvent();
     	self::$router = new gfRouter(self::$request->getGet());
     	
     }
@@ -39,6 +32,18 @@ class gf {
             self::$instance = new gf();
         }
         return self::$instance;
+    }
+
+    public static function router() {
+        return self::$router;
+    }
+
+    public static function request() {
+        return self::$request;
+    }
+
+    public static function event() {
+        return self::$request;
     }
     
     public static function run() {
