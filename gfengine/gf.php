@@ -15,6 +15,8 @@ class gf {
     public static $router;
 
     public static $request;
+
+    public static $cookie;
     
     private function __construct() {
 
@@ -44,6 +46,10 @@ class gf {
 
     public static function event() {
         return self::$request;
+    }
+
+    public static function cookie() {
+        return self::$cookie;
     }
     
     public static function run() {

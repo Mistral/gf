@@ -13,10 +13,12 @@ class gfRewriter {
     private $_sRulesUse = 'example';
     private $_aRules = array();
 
-    public function __construct() {
-        require_once gf_APPS_PATH.'/configs/rewriterules.php';
+    private $url;
+
+    public function __construct($url) {
+        require_once gf_APP_PATH.'/configs/rewriterules.php';
         
-        
+        $this->url = $url;
         
         if(!empty ($aRules)) {
             foreach(@$aRules as $k => $v) {
@@ -31,7 +33,7 @@ class gfRewriter {
         if($aOpen['params'] != NULL) {
             $aArrayOfParams = array();
             foreach ($aOpen['params'] as $pattern) {
-                if(preg_match($pattern, gfRequest::getVarGET('url'), $match)) {
+                if(preg_match($pattern, $url, $match)) {
                     $aArrayOfParams[] = $match[0];
                 }
             }

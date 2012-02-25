@@ -61,7 +61,7 @@ class gfRouter {
 
                     require_once gf_CORE_PATH.'/gfRewriter.php';
 
-                    $rewriter = new gfRewriter();
+                    $rewriter = new gfRewriter($request['url']);
 
                     if(gfConfig::getConfig('logs') == 1) {
 

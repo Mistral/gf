@@ -1,5 +1,5 @@
 <?php
-if(!defined('gf_SYSTEM_PATH')) {
+if(!defined('gf_PATH')) {
     die('No script access');
 }
 /**
@@ -11,19 +11,19 @@ if(!defined('gf_SYSTEM_PATH')) {
 
 class gfCookie {
 	
-	public function setCookie($sName, $sValue, $iExpire) {
+	public function set($sName, $sValue, $iExpire) {
 		setcookie($sName, $sValue, mktime() + $iExpire);
 	}
 	
-	public function getCookie($sName) {
-		if($this -> issetCookie($sName)) {
+	public function get($sName) {
+		if($this -> is($sName)) {
 			return $_COOKIE[$sName];
 		} else {
 			return false;
 		}
 	}
 	
-	public function issetCookie($sName) {
+	public function is($sName) {
 		if(isset($_COOKIE[$sName])) {
 			return true;
 		} else {
@@ -31,7 +31,7 @@ class gfCookie {
 		}
 	}
 	
-	public function unsetCookie($sName) {
+	public function delete($sName) {
 		unset($_COOKIE[$sName]);
 	}
 	
