@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('gf_SYSTEM_PATH')) {
+if (!defined('gf_PATH')) {
     die('No script access');
 }
 

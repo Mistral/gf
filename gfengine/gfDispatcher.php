@@ -7,24 +7,42 @@ class gfDispatcher {
     private $o_controller;
 
     public function  __construct($router) {
+
         $this->data = $router->getModules();
+
         if($this->isController($this->data['controller'])) {
+
             $this->setController($this->data['controller']);
             $this->setAction($this->data['action']);
+
         } else {
+
             if(gfConfig::getConfig('show_http_errors' == 1)) {
+
                 $this->setController('error');
                 $this->setAction('index');
+
+                gf::router()->setController('error');
+                gf::router()->setAction('index');
+
             } else {
+
                 $this->setController('index');
                 $this->setAction('index');
+
+                gf::router()->setController('index');
+                gf::router()->setAction('index');
+
             }
+
         }
 
         if(!$this->load($this->controller, $this->action)) {
 
             $this->setController('error');
             $this->setAction('index');
+            gf::router()->setController('error');
+            gf::router()->setAction('index');
 
             $this->load($this->controller, $this->action);
             
