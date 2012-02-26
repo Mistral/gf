@@ -26,9 +26,13 @@ class gfAction {
 
     public function addModel() {
         require_once(gf_CORE_PATH.'/gfModel.php');
+        require_once(gf_CORE_PATH.'/gfModelForm.php');
         require_once(gf_APP_PATH.'/models/'.gf::router()->getController().'.php');
         $model = gf::router()->getController().'Model';
         $this->model = new $model();
+        if($this->model->getType() != 'standard') {
+            $this->model->addValider();
+        }
     }
 
     public function addLang() {

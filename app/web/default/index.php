@@ -9,6 +9,8 @@
 
     <!-- Le styles -->
     <link href="app/web/default/assets/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="app/web/default/view.css" media="all">
+    <script type="text/javascript" src="app/web/default/view.js"></script>
     <style type="text/css">
       body {
         padding-top: 60px;

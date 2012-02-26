@@ -1,5 +1,6 @@
 <?php
-gfRunner::addRequire(gf_SYSTEM_LIBS_CORE_PATH.'/access/gfAccessCL.php', array('infile' => __FILE__, 'inline' => __LINE__));
+require_once(gf_CORE_PATH.'/access/gfAccessCL.php');
+
 class gfAccessCL_gf extends gfAccessCL {
 	
 	private $_aRoles = array();

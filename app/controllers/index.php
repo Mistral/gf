@@ -8,10 +8,14 @@ class indexController extends gfAction {
         //$this->addHelper('index', array('time', 'form'));
     }
     public function index() {
-        $this->view()->b = 'cc';
-        $this->view()->md = $this->Model()->x();
-        $this->view()->lg = $this->lang['costam'];
-        $this->view()->render();
+        if($_POST) {
+            if($this->Model()->validFormIndex()) {
+                $this->view()->msg = 'success';
+            } else {
+                $this->view()->msg = 'fail';
+            }
+        }
+        $this->render();
 
     }
 }
