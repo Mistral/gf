@@ -8,7 +8,11 @@ class indexController extends gfAction {
         //$this->addHelper('index', array('time', 'form'));
     }
     public function index() {
-        echo $this->lib['gfValidate']->b();
+        $this->view()->b = 'cc';
+        $this->view()->md = $this->Model()->x();
+        $this->view()->lg = $this->lang['costam'];
+        $this->view()->render();
+
     }
 }
 ?>

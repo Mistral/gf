@@ -49,6 +49,9 @@ class gfDispatcher {
         }
 
         $this->o_controller->setup();
+        $this->o_controller->addModel();
+        $this->o_controller->addView();
+        $this->o_controller->addLang();
         $this->o_controller->{$this->action}();
 
 

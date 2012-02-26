@@ -12,24 +12,46 @@ if(!defined('gf_PATH')) {
 class gfAction {
 
     protected $lib;
-    protected $alibs;
-    protected $ahelpers;
-    protected $view;
+    private $alibs;
+    private $ahelpers;
+    protected $helper;
+    private $view;
     protected $lang;
+    private $model;
+
+    public function addView() {
+        require_once(gf_CORE_PATH.'/gfView.php');
+        $this->view = new gfView();
+    }
+
+    public function addModel() {
+        require_once(gf_CORE_PATH.'/gfModel.php');
+        require_once(gf_APP_PATH.'/models/'.gf::router()->getController().'.php');
+        $model = gf::router()->getController().'Model';
+        $this->model = new $model();
+    }
+
+    public function addLang() {
+        require_once(gf_APP_PATH.'/langs/'.gfRegister::get('language').'/'.gf::router()->getController().'.php');
+        $this->lang = $lang;
+        $this->view()->addLang($lang);
+    }
 
 
-    public function addLib($action, array $libs) {
-        $this->alibs[$action] = $libs;
-        if(count($this->alibs[gf::router()->getAction()]) > 0) {
-            foreach($this->alibs[gf::router()->getAction()] as $lib) {
-                if($this->loadLib($lib)) {
-                    $this->lib[$lib] = new $lib();
+    protected function addLib($action, array $libs) {
+        if($action == gf::router()->getAction()) {
+            $this->alibs[$action] = $libs;
+            if(count($this->alibs[gf::router()->getAction()]) > 0) {
+                foreach($this->alibs[gf::router()->getAction()] as $lib) {
+                    if($this->loadLib($lib)) {
+                        $this->lib[$lib] = new $lib();
+                    }
                 }
             }
         }
     }
     
-    public function loadLib($lib) {
+    private function loadLib($lib) {
         if($this->isLib(gf_LIBS_PATH.'/'.$lib)) {
             require_once(gf_LIBS_PATH.'/'.$lib.'.php');
             return true;
@@ -40,23 +62,54 @@ class gfAction {
         return false;
     }
 
-    public function isLib($lib) {
+    private function isLib($lib) {
         if(is_file($lib.'.php')) {
             return true;
         }
         return false;
     }
 
-    public function addHelper($action, array $helpers) {
-
+    protected function addHelper($action, array $helpers) {
+        if($action == gf::router()->getAction()) {
+            $this->ahelpers[$action] = $helpers;
+            if(count($this->ahelpers[gf::router()->getAction()]) > 0) {
+                foreach($this->ahelpers[gf::router()->getAction()] as $helper) {
+                    if($this->loadHelper($helper)) {
+                        $this->helper[$helper] = new $helper();
+                    }
+                }
+            }
+        }
     }
 
-    public function view() {
-        //zwraca obiekt view
+    private function loadHelper($helper) {
+        if($this->isHelper(gf_LIBS_PATH.'/helpers/'.$helper)) {
+            require_once(gf_LIBS_PATH.'/helpers/'.$helper.'.php');
+            return true;
+        } else if($this->isHelper(gf_APP_PATH.'/libs/helpers/'.$helper)) {
+            require_once(gf_APP_PATH.'/libs/helpers/'.$helper.'.php');
+            return true;
+        }
+        return false;
     }
 
-    public function render() {
-        //generuje od razu widok
+    private function isHelper($helper) {
+        if(is_file($helper.'.php')) {
+            return true;
+        }
+        return false;
+    }
+
+    protected function Model() {
+        return $this->model;
+    }
+
+    protected function view() {
+        return $this->view;
+    }
+
+    protected function render() {
+        $this->view->render();
     }
 
 }
